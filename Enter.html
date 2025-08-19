@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kohei Shimizu</title>
   <style>
-    body{
-      background-image:url(bg-it.jpg);
-      width:100%;
-      padding-top:50px;
-      background-size:cover;
-      font-family: Arial;
-    }
-    main {
-      padding: 20px 20px;
-      text-align: center;
-      align-items: center;
-      overflow: auto;
+    /* ===== Base ===== */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background-image: url(bg-it.jpg);
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", sans-serif;
+      color: #111;
+      padding-top: 50px;
     }
 
     .home-main {
@@ -26,72 +24,256 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      font-size:40px;
-    }
-
-    .home-buttons li a:hover{
-      background-color:rgb(134, 134, 134);
-    }
-
-    .home-buttons li{
-      list-style:none;
-    }
-
-    .home-buttons li a{
-      background-color: rgb(255, 255, 255);
-      color:rgb(46, 42, 42);
-      font-weight: bold;
-      font-size: 40px;
-      border:2px solid rgb(90, 89, 89);
-      padding:30px;
-      text-decoration:none;
-      display:block;
+      padding: 0 16px 48px;
       text-align: center;
-      cursor: pointer;
+      gap: 16px;
     }
 
-    .pass{
-      display:block;
-      align-items: center;
-      margin-bottom: 20px;
+    h1 { margin: 0 0 8px; font-size: 2.25rem; line-height: 1.2; }
+
+    .goback ul, .home-buttons ul { margin: 0; padding: 0; }
+    .goback li, .home-buttons li { list-style: none; }
+
+    .goback a {
+      display: inline-block;
+      color: #111;
+      background-color: #bab9b9;
+      font-size: 0.95rem;
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: background-color .2s;
     }
-    
-    /*footer*/
+    .goback a:hover { background-color: #737373; color: #fff; }
+
+    /* PC配置 */
+    .home-buttons li a {
+      position: absolute;
+      background-color: #2d2d2d;
+      color: white;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      border: 2px solid #5a5959;
+      border-radius: 10px;
+      transition: background-color .2s, transform .1s;
+      white-space: nowrap;
+    }
+    .home-buttons li a:hover { background-color: #737373; }
+    .home-buttons li a:active { transform: scale(0.98); }
+
+    .b-back   { position: static; display: inline-block; background-color: #fff; }
+    .b-about  { top: 15%; left: 50%; transform: translateX(-50%); }
+    .b-history{ top: 38%; left: 15%; }
+    .b-photos { top: 38%; right: 15%; }
+    .b-hobby  { bottom: 15%; left: 25%; }
+    .b-work   { bottom: 15%; right: 25%; }
+
     footer {
       text-align: right;
-      padding-right: 50px;
+      padding: 16px 50px;
       font-size: 12px;
       color: #737373;
     }
+
+    /* ===== モーダル ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;            /* 初期は非表示 */
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 9999;
+    }
+    .modal-overlay.is-open { display: flex; }
+
+    .modal {
+      background: #fff;
+      width: 92vw;
+      max-width: 1000px;
+      height: 86vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+      background: #fafafa;
+    }
+    .modal-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    .modal-close {
+      border: none;
+      background: #eee;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .modal-close:hover { background: #ddd; }
+
+    .modal-body {
+      flex: 1 1 auto;
+      min-height: 0; /* for flexbox overflow */
+    }
+    .modal-iframe {
+      border: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 背景スクロール抑止用 */
+    body.modal-open { overflow: hidden; }
+
+    /* スマホ最適化 */
+    @media (max-width: 768px) {
+      body { padding-top: 24px; }
+      h1 { font-size: 1.8rem; }
+
+      .b-back { position: static; transform: none; margin-bottom: 8px; }
+
+      .home-buttons li a {
+        position: static;
+        transform: none !important;
+        display: block;
+        width: 100%;
+        max-width: 520px;
+        margin: 8px auto;
+        font-size: 1.125rem;
+        padding: 14px 18px;
+        text-align: center;
+      }
+
+      .home-main { justify-content: flex-start; padding-top: 24px; gap: 8px; }
+
+      .modal {
+        width: 100vw;
+        height: 96vh;
+        border-radius: 10px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      h1 { font-size: 1.6rem; }
+      .home-buttons li a { font-size: 1rem; padding: 12px 14px; }
+    }
   </style>
 </head>
-
 <body>
   <main class="home-main">
-    <h1>Welcome!</h1>
-    <div class="pass">
-      <input type="password" id="input" placeholder="Enter the password" autocomplete="off"> 
+    <h1>Kohei Shimizu</h1>
+
+    <div class="goback">
+      <ul>
+        <li><a href="Enter.html" class="b-back">Go back</a></li>
+      </ul>
     </div>
+
     <div class="home-buttons">
       <ul>
-        <li><a onclick="checkPassword()">Enter⇒</a></li>
+        <!-- data-modal でモーダル対象にする -->
+        <li><a href="About.html"   class="b-about"   data-modal>About</a></li>
+        <li><a href="history.html" class="b-history" data-modal>History</a></li>
+        <li><a href="photos.html"  class="b-photos"  data-modal>Photos</a></li>
+        <li><a href="hobby.html"   class="b-hobby"   data-modal>Hobby</a></li>
+        <li><a href="work.html"    class="b-work"    data-modal>Resume</a></li>
       </ul>
     </div>
   </main>
-  
+
   <footer>
     <p>&copy; Kohei Shimizu Inc. All Rights Reserved.</p>
   </footer>
 
+  <!-- ===== モーダル要素 ===== -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">Loading…</h2>
+        <button class="modal-close" id="modalClose" aria-label="Close">Close ✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- サンドボックス化した iframe で読み込み -->
+        <iframe id="modalFrame" class="modal-iframe" sandbox="allow-same-origin allow-forms allow-scripts"></iframe>
+      </div>
+    </div>
+  </div>
+
   <script>
-    function checkPassword(){
-      const input = document.getElementById("input").value;
-      if(input === "43"){
-        window.location.href = "index.html";
-      } else {
-        alert("Incorrect password!");
+    // モーダル開閉と読み込み
+    (function () {
+      const overlay = document.getElementById('modalOverlay');
+      const closeBtn = document.getElementById('modalClose');
+      const frame = document.getElementById('modalFrame');
+      const titleEl = document.getElementById('modalTitle');
+
+      // すべての data-modal リンクに対してモーダルをアタッチ
+      document.querySelectorAll('a[data-modal]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const url = a.getAttribute('href');
+          const label = a.textContent?.trim() || 'Page';
+
+          openModal(url, label);
+        });
+      });
+
+      function openModal(url, label) {
+        titleEl.textContent = label;
+        // 読み込み中表示
+        overlay.classList.add('is-open');
+        document.body.classList.add('modal-open');
+        frame.src = ''; // リセット
+        // 小さな遅延でローディング感を出しつつ確実に描画
+        requestAnimationFrame(() => {
+          frame.src = url;
+        });
       }
-    }
+
+      function closeModal() {
+        overlay.classList.remove('is-open');
+        document.body.classList.remove('modal-open');
+        // 閉じるときに破棄して音/動画/実行中JSを止める
+        frame.src = 'about:blank';
+        titleEl.textContent = '';
+      }
+
+      // 閉じる系イベント
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal(); // 外側クリックで閉じる
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+      });
+
+      // iframe からタイトルを拾ってヘッダに表示（同一オリジン前提）
+      frame.addEventListener('load', () => {
+        try {
+          const doc = frame.contentDocument || frame.contentWindow?.document;
+          const t = doc?.title?.trim();
+          if (t) titleEl.textContent = t;
+        } catch (err) {
+          // クロスオリジンの場合は無視
+        }
+      });
+    })();
   </script>
 </body>
 </html>
