@@ -240,7 +240,7 @@
         document.body.classList.add('modal-open');
         frame.src = ''; // リセット
         if (/work\.html(\?|#|$)/i.test(url)) {
-          frame.removeAttribute('sandbox');
+          frame.removeAttribute('sandbox');}
         // 小さな遅延でローディング感を出しつつ確実に描画
         requestAnimationFrame(() => {
           frame.src = url;
@@ -277,4 +277,5 @@
     })();
   </script>
 </body>
+
 </html>
