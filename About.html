@@ -3,118 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Profile</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-        }
-
-        /* プロフィール部分 */
-        .profile {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap; /* スマホで折り返し */
-        }
-
-        .profile img {
-            max-width: 200px;
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        .details {
-            max-width: 400px;
-            text-align: left;
-        }
-
-        .details p {
-            margin: 8px 0;
-        }
-
-        /* 質問欄 */
-        .qa {
-            margin-top: 15px;
-        }
-
-        .qa textarea {
-            width: 100%;
-            min-height: 60px;
-            padding: 8px;
-            font-size: 14px;
-            resize: vertical;
-        }
-
-        .qa input[type="submit"] {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* オフィス画像 */
-        .office img {
-            max-width: 100%;
-            height: auto;
-            margin: 20px 0;
-        }
-
-        /* 戻るボタン */
-        .goback ul {
-            padding: 0;
-            list-style: none;
-        }
-
-        .goback li {
-            display: inline-block;
-            margin: 10px;
-        }
-
-        .goback a {
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
-
-        /* フッター */
-        footer {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f4f4f4;
-            font-size: 12px;
-            text-align: center;
-        }
-
-        /* スマホ対応（768px以下） */
-        @media (max-width: 768px) {
-            .profile {
-                flex-direction: column; /* 縦並びにする */
-                align-items: center;
-                text-align: center;
-            }
-
-            .details {
-                text-align: center;
-            }
-
-            h1 {
-                font-size: 1.5em;
-            }
-        }
-    </style>
 </head>
 <body>
     <main>
@@ -135,11 +25,7 @@
         <div class="office">
             <img src="office.png" alt="Office Photo">
         </div>
-        <div class="goback">
-            <ul>
-                <li><a href="index.html" class="b-back">Home</a></li>
-            </ul>
-        </div>
+
     </main>
 
     <footer>
