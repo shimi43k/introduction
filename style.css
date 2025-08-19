@@ -139,3 +139,91 @@ footer {
     color: #737373;
 }
 
+/* ==== 汎用：はみ出し防止・画像の自動縮小 ==== */
+*, *::before, *::after { box-sizing: border-box; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* 画面幅が狭いとき用の調整 */
+@media (max-width: 768px) {
+
+  /* --- ヘッダー/ナビ --- */
+  header { position: fixed; top: 0; width: 100%; }
+  body { padding-top: 60px; } /* 固定ヘッダーと被らないよう少し広げる */
+  nav ul { flex-wrap: wrap; gap: 6px 8px; padding: 0 8px; }
+  .header-tab li a {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  /* --- メイン領域 --- */
+  main { padding: 16px; text-align: center; }
+
+  /* --- Profile: PC横並び → スマホ縦並び --- */
+  .profile {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .profile img {
+    /* 固定サイズだと潰れるのでスマホは自動縮小 */
+    width: min(60vw, 220px);
+    height: auto;
+    margin-right: 0;
+  }
+  .details p { text-align: center; }
+
+  /* --- 画像サイズ固定の解除（Office画像など） --- */
+  .office img {
+    width: 100%;
+    height: auto;
+    margin-top: 24px;
+  }
+
+  /* --- Historyページの読みやすさ --- */
+  .History {
+    margin: 12px 8px;
+    padding: 12px;
+    border-radius: 24px;      /* 80pxはスマホだと丸すぎるので少し控えめに */
+    box-shadow: 6px 6px 3px rgb(53, 1, 1);
+  }
+  .his-list li {
+    font-size: 16px;
+    margin: 12px;
+    line-height: 1.8;
+    padding-left: 18px;
+  }
+  .year { font-size: 22px; }
+
+  /* --- Photos（3列固定→自動折り返し） --- */
+  .photo-album {
+    gap: 16px 2%;
+    justify-content: center;
+  }
+  .photo-album img {
+    width: min(46vw, 320px);  /* 2列ベースで縮む */
+    height: auto;
+  }
+
+  /* --- 戻るボタン --- */
+  .goback { margin-top: 24px; }
+  .goback li { text-align: center; }
+  .goback li a {
+    display: inline-block;
+    padding: 12px 16px;
+    margin-top: 0;
+    border-radius: 8px;
+  }
+
+  /* --- 見出しなど --- */
+  h1 { font-size: 1.6rem; }
+  footer { padding-right: 16px; font-size: 11px; }
+}
+
+/* さらに小さい端末向けの微調整 */
+@media (max-width: 480px) {
+  .header-tab li a { font-size: 14px; padding: 6px 12px; }
+  .photo-album img { width: 94vw; } /* 1列で見やすく */
+  h1 { font-size: 1.4rem; }
+}
+
