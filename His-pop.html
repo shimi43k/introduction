@@ -40,7 +40,21 @@ main {
 .year{
     font-size:30px;
 }
+  main { padding: 16px; text-align: center; }
 
+  /* --- Profile: PC横並び → スマホ縦並び --- */
+  .profile {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .profile img {
+    /* 固定サイズだと潰れるのでスマホは自動縮小 */
+    width: min(60vw, 220px);
+    height: auto;
+    margin-right: 0;
+  }
     </style>
 </head>
 <body>
@@ -68,3 +82,4 @@ main {
     </main>
 </body>
 </html>
+
