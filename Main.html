@@ -142,18 +142,44 @@
     body.modal-open { overflow: hidden; }
 
     /* スマホ最適化 */
-    @media (min-width: 1024px) {
+  @media (min-width: 1024px) {
   .home-buttons li a {
     font-size: 1.6rem;    /* フォント拡大 */
     padding: 18px 36px;   /* パディング拡大 */
     border-width: 3px;    /* 枠線太く */
   }
-}
+  }
 
     @media (max-width: 360px) {
       h1 { font-size: 1.6rem; }
       .home-buttons li a { font-size: 1rem; padding: 12px 14px; }
     }
+/* ── 縦表示(スマホのportrait)だけ、五角形をコンパクトに ── */
+@media (orientation: portrait) {
+  /* ボタンを少し小さめに（重なり対策） */
+  .home-buttons li a {
+    font-size: 0.95rem;      /* 例: 1rem→0.95rem */
+    padding: 8px 16px;       /* 例: 10px 24px→少し小さく */
+    border-width: 2px;       /* 枠線はそのまま or 少し細く */
+  }
+
+  /* タイトル周りの余白も少し詰める（縦長対策） */
+  h1 { margin: 0 0 4px; }
+
+  /* ─ 配置の微調整（縦の長さを詰め、左右へ寄せる） ─
+     それぞれの値は端末に合わせて微調整OK */
+  /* 上頂点（About）を少し上へ */
+  .b-about  { top: 8vh;  left: 50%; transform: translateX(-50%); }
+
+  /* 中段（History / Photos）を上げて、左右に寄せる */
+  .b-history{ top: 26vh; left: 6vw; }
+  .b-photos { top: 26vh; right: 6vw; }
+
+  /* 下段（Hobby / Resume）をぐっと上げ、さらに外側へ */
+  .b-hobby  { bottom: 22vh; left: 12vw; }
+  .b-work   { bottom: 22vh; right: 12vw; }
+}
+
   </style>
 </head>
 <body>
